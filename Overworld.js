@@ -10,7 +10,7 @@ class Overworld {
     image.onload = () => {
         this.ctx.drawImage(image, 0,0)
     };
-    image.src = "/images/maps/OutdoorsTileset.png";
+    image.src = "/images/maps/testmap.png";
 
     //Placing objects
     const hero = new GameObject({
