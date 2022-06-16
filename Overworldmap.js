@@ -22,13 +22,14 @@ window.OverworldMaps = {
         lowerSrc: "/images/maps/outerhouse.png", 
         upperSrc: "/images/maps/outerhouse.png",
         gameObjects: {
-            hero: new GameObject({
-            x: 5,
-            y: 6,
+            hero: new Person({
+            isPlayerControlled: true,
+            x: utils.withGrid(5),
+            y: utils.withGrid(6),
             }),
-            fox: new GameObject({
-                x: 7,
-                y: 9,
+            fox: new Person({
+                x: utils.withGrid(7),
+                y: utils.withGrid(9),
                 src: "/images/characters/Fox Sprite Sheet.png"
             })
         }
@@ -37,18 +38,19 @@ window.OverworldMaps = {
         lowerSrc: "/images/maps/interior2.png",
         upperSrc: "/images/maps/interior2.png", 
         gameObjects: {
-            hero: new GameObject({
-            x: 5,
-            y: 6,
+            hero: new Person({
+            isPlayerControlled: true,
+            x: utils.withGrid(9),
+            y: utils.withGrid(10),
             }),
-            fox: new GameObject({
-                x: 7,
-                y: 9,
+            fox: new Person({
+                x: utils.withGrid(7),
+                y: utils.withGrid(9),
                 src: "/images/characters/Fox Sprite Sheet.png"
             }),
-            panda: new GameObject({
-                x: 4,
-                y: 10,
+            panda: new Person({
+                x: utils.withGrid(4),
+                y: utils.withGrid(10),
                 src: "/images/characters/panda-spritesheet-16x16.png"
             })
         }
