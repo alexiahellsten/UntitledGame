@@ -26,7 +26,7 @@ class Person extends GameObject {
         }
     }
 
-    //Should be run ever frame
+    //Should be run every frame
     updatePosition() {
         if (this.movingProgressRemaining > 0) {
             const [property, change] = this.directionUpdate[this.direction];

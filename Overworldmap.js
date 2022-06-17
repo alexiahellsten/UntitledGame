@@ -27,11 +27,11 @@ window.OverworldMaps = {
             x: utils.withGrid(5),
             y: utils.withGrid(6),
             }),
-            fox: new Person({
-                x: utils.withGrid(7),
-                y: utils.withGrid(9),
-                src: "/images/characters/Fox Sprite Sheet.png"
-            })
+            // fox: new Person({
+            //     x: utils.withGrid(7),
+            //     y: utils.withGrid(9),
+            //     src: "/images/characters/Fox Sprite Sheet.png"
+            // })
         }
     },
     InsideHouse: {
@@ -43,16 +43,16 @@ window.OverworldMaps = {
             x: utils.withGrid(9),
             y: utils.withGrid(10),
             }),
-            fox: new Person({
-                x: utils.withGrid(7),
-                y: utils.withGrid(9),
-                src: "/images/characters/Fox Sprite Sheet.png"
-            }),
-            panda: new Person({
-                x: utils.withGrid(4),
-                y: utils.withGrid(10),
-                src: "/images/characters/panda-spritesheet-16x16.png"
-            })
+            // fox: new Person({
+            //     x: utils.withGrid(7),
+            //     y: utils.withGrid(9),
+            //     src: "/images/characters/Fox Sprite Sheet.png"
+            // }),
+            // panda: new Person({
+            //     x: utils.withGrid(4),
+            //     y: utils.withGrid(10),
+            //     src: "/images/characters/panda-spritesheet-16x16.png"
+            // })
         }
     }
 }

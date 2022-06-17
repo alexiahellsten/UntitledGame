@@ -20,15 +20,48 @@ class Sprite {
 
         //Configuring the initial state & animation
         this.animations = config.animations || {
-            idleDown : [
-                [0, 0]
-            ]
+            "idle-down": [ [0, 0] ], 
+            "idle-right": [ [6, 16] ], 
+            "idle-up": [ [0, 7] ], 
+            "idle-left": [ [0, 12] ],
+            "walk-down": [ [0, 3], [3, 3], [0, 3], [6, 3] ],
+            "walk-right": [ [3, 16], [6, 16 ], [3, 16], [3, 16] ], //needs some fine tuning
+            "walk-up": [ [4, 6], [4, 9], [4, 6], [4, 9] ], //needs some fine tuning
+            "walk-left": [ [0, 12], [0, 12], [3, 12], [3, 12] ], //needs some fine tuning
+            "stretch-up": [ [0, 3], [0, 3], [6, 0], [3, 0] ], 
+            "jump-up": [ [0, 3], [0, 3], [6, 0], [3, 1] ]
         } 
-        this.currentAnimation = config.currentAnimation || "idleDown";
+        this.currentAnimation = "jump-up"; //config.currentAnimation || "idleDown";
         this.currentAnimationFrame = 0;
+
+        //How many game loop frames we want to show the cropped sprite image
+        this.animationFrameLimit = config.animationFrameLimit || 16;
+        this.animationFrameProgress = this.animationFrameLimit;
 
         //Reference to the game object
         this.gameObject = config.gameObject;
+    }
+
+    //Gets the current animation frame
+    get frame() {
+        return this.animations[this.currentAnimation][this.currentAnimationFrame];
+    }
+
+    //Updates which frame is being drawn
+    updateAnimationProgress() {
+        //Downtick frame progress
+        if (this.animationFrameProgress > 0) {
+            this.animationFrameProgress -= 1;
+            return;
+        }
+
+        //Resets the counter
+        this.animationFrameProgress = this.animationFrameLimit;
+        this.currentAnimationFrame += 1;
+
+        if (this.frame === undefined) {
+            this.currentAnimationFrame = 0;
+        }
     }
 
     //Method for drawing the objects on the screen
@@ -44,11 +77,16 @@ class Sprite {
 
         this.isShadowLoaded && ctx.drawImage(this.shadow, z, q);
 
+
+        const [frameX, frameY] = this.frame;
+
         this.isLoaded && ctx.drawImage(this.image, 
-            0, 0,
+            frameX * 16, frameY * 16, // 0, 0,
             32, 32,
             x, y,
             32, 32
             )
+
+            this.updateAnimationProgress();
     }
 }
