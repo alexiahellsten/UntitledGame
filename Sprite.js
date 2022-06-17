@@ -31,11 +31,11 @@ class Sprite {
             "stretch-up": [ [0, 3], [0, 3], [6, 0], [3, 0] ], 
             "jump-up": [ [0, 3], [0, 3], [6, 0], [3, 1] ]
         } 
-        this.currentAnimation = "jump-up"; //config.currentAnimation || "idleDown";
+        this.currentAnimation = "walk-down"; //config.currentAnimation || "idleDown";
         this.currentAnimationFrame = 0;
 
         //How many game loop frames we want to show the cropped sprite image
-        this.animationFrameLimit = config.animationFrameLimit || 16;
+        this.animationFrameLimit = config.animationFrameLimit || 10;
         this.animationFrameProgress = this.animationFrameLimit;
 
         //Reference to the game object
@@ -45,6 +45,15 @@ class Sprite {
     //Gets the current animation frame
     get frame() {
         return this.animations[this.currentAnimation][this.currentAnimationFrame];
+    }
+
+    //Checks if the animation is changing & resets
+    setAnimation(key) {
+        if (this.currentAnimation !== key) {
+            this.currentAnimation = key;
+            this.currentAnimationFrame = 0;
+            this.animationFrameProgress = this.animationFrameLimit;
+        }
     }
 
     //Updates which frame is being drawn
