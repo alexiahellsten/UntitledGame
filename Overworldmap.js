@@ -8,24 +8,32 @@ class OverworldMap {
         this.upperImage = new Image();
         this.upperSrc = config.upperSrc;
     }
-    drawLowerImage(ctx) {
-        ctx.drawImage(this.lowerImage, 0, 0)
+    drawLowerImage(ctx, cameraPerson) {
+        ctx.drawImage(
+        this.lowerImage, 
+        utils.withGrid(9.5) - cameraPerson.x,
+        utils.withGrid(9) - cameraPerson.y
+        )
     }
-    drawUpperImage(ctx) {
-        ctx.drawImage(this.upperImage, 0, 0)
-    }
+    drawUpperImage(ctx, cameraPerson) {
+        ctx.drawImage(
+            this.upperImage, 
+            utils.withGrid(9.5) - cameraPerson.x,
+            utils.withGrid(9) - cameraPerson.y
+            )
+        }
 }
 
 //Object for all of the maps in the game
 window.OverworldMaps = {
     DemoRoom: {
-        lowerSrc: "/images/maps/outerhouse.png", 
+        lowerSrc: "/images/maps/outerhouse.png",
         upperSrc: "/images/maps/outerhouse.png",
         gameObjects: {
             hero: new Person({
-            isPlayerControlled: true,
-            x: utils.withGrid(5),
-            y: utils.withGrid(6),
+                isPlayerControlled: true,
+                x: utils.withGrid(5),
+                y: utils.withGrid(6),
             }),
             // fox: new Person({
             //     x: utils.withGrid(7),
@@ -36,12 +44,12 @@ window.OverworldMaps = {
     },
     InsideHouse: {
         lowerSrc: "/images/maps/interior2.png",
-        upperSrc: "/images/maps/interior2.png", 
+        upperSrc: "/images/maps/interior2.png",
         gameObjects: {
             hero: new Person({
-            isPlayerControlled: true,
-            x: utils.withGrid(9),
-            y: utils.withGrid(10),
+                isPlayerControlled: true,
+                x: utils.withGrid(9),
+                y: utils.withGrid(10),
             }),
             // fox: new Person({
             //     x: utils.withGrid(7),

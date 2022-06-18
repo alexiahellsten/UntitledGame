@@ -74,15 +74,15 @@ class Sprite {
     }
 
     //Method for drawing the objects on the screen
-    draw(ctx) {
+    draw(ctx, cameraPerson) {
 
         //Shadow variables
-        const z = this.gameObject.z - 8;
-        const q = this.gameObject.q - 50;
+        const z = this.gameObject.z - 8 + utils.withGrid(9.5) - cameraPerson.z;
+        const q = this.gameObject.q - 50 + + utils.withGrid(9) - cameraPerson.q;
         
         //Sprite variables
-        const x = this.gameObject.x - 17;
-        const y = this.gameObject.y - 64;
+        const x = this.gameObject.x - 17 + utils.withGrid(9.5) - cameraPerson.x;
+        const y = this.gameObject.y - 64 + utils.withGrid(9) - cameraPerson.y;
 
         this.isShadowLoaded && ctx.drawImage(this.shadow, z, q);
 
