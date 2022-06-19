@@ -29,7 +29,7 @@ class DirectionInput {
             //If we found valid direction and it doesn't exist in the array, we want to put it in the beginning of the array (unshift it)
             if(dir && this.heldDirection.indexOf(dir) === -1) {
                 this.heldDirection.unshift(dir);
-                console.log(this.heldDirection);
+                // console.log(this.heldDirection);
             }
         });
 
@@ -39,7 +39,7 @@ class DirectionInput {
             const index = this.heldDirection.indexOf(dir);
             if(index > -1) {
                 this.heldDirection.splice(index, 1); //Removes 1 entry out of the index
-                console.log(this.heldDirection);
+                // console.log(this.heldDirection);
             }
         })
     }
