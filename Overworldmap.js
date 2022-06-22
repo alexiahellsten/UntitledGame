@@ -8,6 +8,8 @@ class OverworldMap {
 
         this.upperImage = new Image();
         this.upperSrc = config.upperSrc;
+
+        this.isCutscenePlaying = false;
     }
 
     drawLowerImage(ctx, cameraPerson) {
@@ -33,11 +35,32 @@ class OverworldMap {
         }
 
         mountObjects() {
-            Object.values(this.gameObjects).forEach(o => {
+            Object.keys(this.gameObjects).forEach(key => {
               
+                //Gives the object an id with the key value
+                let object = this.gameObjects[key];
+                object.id = key;
+
                 //TODO: determine if object should actually render/mount
-                o.mount(this);
+                object.mount(this);
             });
+        }
+
+        //Method to start playing cutscene
+        async startCutscene(events) {
+            this.isCutscenePlaying = true;
+
+            for (let i = 0; i < events.length; i++ ) {
+                const event = new OverWorldEvent({
+                    event: events[i],
+                    map: this,
+                })
+                await eventHandler.init();
+            }
+            this.isCutscenePlaying = false;
+
+            //Resets NPC to do their idle behaviors
+            Object.values(this.gameObjects).forEach(object => object.doBehaviorEvent())
         }
 
         //When game object enters, one of these methods will fire
@@ -84,15 +107,28 @@ window.OverworldMaps = {
                 x: utils.withGrid(9),
                 y: utils.withGrid(10),
             }),
-            // fox: new Person({
-            //     x: utils.withGrid(7),
-            //     y: utils.withGrid(9),
-            //     src: "/images/characters/Fox Sprite Sheet.png"
-            // }),
+            fox: new Person({
+                x: utils.withGrid(7),
+                y: utils.withGrid(9),
+                src: "/images/characters/Fox Sprite Sheet.png",
+                behaviorLoop: [
+                    { type: "walk", direction: "left" },
+                    // { type: "stand", direction: "up", time: 800 },
+                    { type: "walk", direction: "up" },
+                    { type: "walk", direction: "right" },
+                    { type: "walk", direction: "down" },
+                ]
+            }),
             panda: new Person({
                 x: utils.withGrid(4),
                 y: utils.withGrid(10),
-                src: "/images/characters/panda-spritesheet-16x16.png"
+                src: "/images/characters/panda-spritesheet-16x16.png",
+                behaviorLoop: [
+                    { type: "stand", direction: "left", time: 800 },
+                    { type: "stand", direction: "up", time: 800 },
+                    { type: "walk", direction: "right", time: 1200 },
+                    { type: "walk", direction: "up", time: 300 },
+                ]
             })
         },
         walls: {

@@ -5,6 +5,7 @@ class Person extends GameObject {
 
         //Lets characters keep moving until they reach a cetain point in the grid
         this.movingProgressRemaining = 16;
+        this.isStanding = false;
 
         this.isPlayerControlled = config.isPlayerControlled || false;
 
@@ -26,7 +27,7 @@ class Person extends GameObject {
             //
 
             //Case - User has pressed an arrow key, we're keyboard ready
-            if (this.isPlayerControlled && state.arrow) {
+            if (!state.map.isCutscenePlaying && this.isPlayerControlled && state.arrow) {
                 this.startBehavior(state, {
                   type: "walk",
                   direction: state.arrow
@@ -46,12 +47,27 @@ class Person extends GameObject {
     
           //Stops function is the space is taken/person hit a wall etc
           if (state.map.isSpaceTaken(this.x, this.y, this.direction)) {
+            
+            behavior.retry && setTimeout(() => {
+              this.startBehavior(state, behavior)
+            }, 10)
+
             return;
           }
     
           //Start walking again
           state.map.moveWall(this.x, this.y, this.direction);
           this.movingProgressRemaining = 16;
+          this.updateSprite(state); //Updates to right animation frame
+        }
+        if (behavior.type === "stand") {
+          this.isStanding = true;
+          setTimeout(() => {
+            utils.emitEvent("PersonStandComplete", {
+              executorId: this.id
+            })
+            this.isStanding = false;
+          }, behavior.time)
         }
       }
 
@@ -60,6 +76,13 @@ class Person extends GameObject {
         const [property, change] = this.directionUpdate[this.direction];
         this[property] += change;
         this.movingProgressRemaining -= 1;
+
+        //If person is done moving, emit event
+        if (this.movingProgressRemaining === 0) {
+          utils.emitEvent("PersonWalkingComplete", {
+            executorId: this.id
+          });
+        }
     }
 
     //Updates sprite animation based on the direction we're typing
